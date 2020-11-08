@@ -6,7 +6,10 @@ export default class OnSerch {
   serchCountries() {
     const url = `https://restcountries.eu/rest/v2/name/${this.search}`;
     return fetch(url)
-      .then(r => r.json())
+      .then(r => {
+        if (r.ok) return r.json();
+        throw new Error(r.statusText);
+      })
       .then(data => {
         return data;
       });

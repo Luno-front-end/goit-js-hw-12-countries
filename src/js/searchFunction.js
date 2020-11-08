@@ -15,10 +15,12 @@ function onSerchCountries(e) {
     return;
   }
   onSerch.query = e.target.value;
-  onSerch.serchCountries().then(createMarkup);
-  // .catch(error => {
-  //   alert('як би ти зламав систему...');
-  // });
+  onSerch
+    .serchCountries()
+    .then(createMarkup)
+    .catch(error => {
+      alert('як би ти зламав систему...');
+    });
 }
 
 function createMarkup(data) {
