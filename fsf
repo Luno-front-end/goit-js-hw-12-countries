@@ -1,0 +1,52 @@
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+module.exports = {
+  devtool: 'inline-source-map',
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.join(__dirname, 'dist'),
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.scss$/i,
+        use: [
+          // "style-loader",
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader',
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({ template: 'src/index.html' }),
+    new MiniCssExtractPlugin(),
+  ],
+
+  devServer: {
+    contentBase: 'paths.BUILD_DIR',
+    compress: true,
+    clientLogLevel: 'warning',
+    stats: 'errors-only',
+    open: true,
+    port: 2506,
+  },
+};
